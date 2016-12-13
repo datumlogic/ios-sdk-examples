@@ -100,6 +100,9 @@ class CustomAnnotationView: MGLAnnotationView {
         animation.duration = 0.1
         layer.borderWidth = selected ? frame.width / 4 : 2
         layer.add(animation, forKey: "borderWidth")
+        
+        // Change the color of the thing
+        layer.backgroundColor = selected ? UIColor.blue.cgColor : UIColor.red.cgColor
     }
 }
 #endif
