@@ -39,6 +39,7 @@
         MBXExampleSourceCustomRaster,
         MBXExampleSourceCustomVector,
         MBXExampleUserTrackingModes,
+        MBXExampleUserLocationAnnotation,
     ]];
 
     NSMutableArray *meh = [[NSMutableArray alloc] init];
