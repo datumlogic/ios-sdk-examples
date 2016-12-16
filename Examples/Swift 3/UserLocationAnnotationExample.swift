@@ -20,9 +20,6 @@ class UserLocationAnnotationExample_Swift: UIViewController, MGLMapViewDelegate 
         mapView.delegate = self
         // Enable heading tracking mode so that the arrow will appear.
         mapView.userTrackingMode = .followWithHeading
-        view.addSubview(mapView)
-
-        mapView.addAnnotation(point)
     }
     // MARK: - MGLMapViewDelegate methods
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
@@ -31,9 +28,6 @@ class UserLocationAnnotationExample_Swift: UIViewController, MGLMapViewDelegate 
             return CustomUserLocationAnnotationView()
         }
         return nil
-    }
-    func mapView(_ mapView: MGLMapView, didUpdate userLocation: MGLUserLocation?) {
-        point.coordinate = (userLocation?.location?.coordinate)!
     }
 }
 
