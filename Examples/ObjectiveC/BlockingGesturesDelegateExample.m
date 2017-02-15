@@ -14,6 +14,8 @@ NSString *const MBXExampleBlockingGesturesDelegate = @"BlockingGesturesDelegateE
     
     MGLMapView *mapView = [[MGLMapView alloc] initWithFrame:self.view.bounds];
     mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    mapView.rotateEnabled = NO;
+    mapView.minimumZoomLevel = 10;
     mapView.delegate = self;
     
     mapView.styleURL = [MGLStyle outdoorsStyleURLWithVersion:9];
@@ -35,25 +37,17 @@ NSString *const MBXExampleBlockingGesturesDelegate = @"BlockingGesturesDelegateE
 - (BOOL)mapView:(MGLMapView *)mapView shouldChangeFromCamera:(MGLMapCamera *)oldCamera toCamera:(MGLMapCamera *)newCamera
 {
     // Get current coordinates
-    MGLCoordinateBounds visibleCoordinateBounds = mapView.visibleCoordinateBounds;
     CLLocationCoordinate2D newCameraCenter = newCamera.centerCoordinate;
-    CLLocationCoordinate2D oldCameraCenter = oldCamera.centerCoordinate;
+    MGLMapCamera *camera = mapView.camera;
     
-    // Get the offset from old camera center to current visible map bounds
-    CGFloat neLatitudeOffset = visibleCoordinateBounds.ne.latitude - oldCameraCenter.latitude;
-    CGFloat neLongitudeOffset = visibleCoordinateBounds.ne.longitude - oldCameraCenter.longitude;
-    CGFloat swLatitudeOffset = visibleCoordinateBounds.sw.latitude - oldCameraCenter.latitude;
-    CGFloat swLongitudeOffset = visibleCoordinateBounds.sw.longitude - oldCameraCenter.longitude;
-    
-    // Update the boundaries with new camera center + boundary offset
-    CLLocationCoordinate2D newNE = CLLocationCoordinate2DMake(neLatitudeOffset + newCameraCenter.latitude, neLongitudeOffset + newCameraCenter.longitude);
-    
-    CLLocationCoordinate2D newSW = CLLocationCoordinate2DMake(swLatitudeOffset + newCameraCenter.latitude, swLongitudeOffset + newCameraCenter.longitude);
-    MGLCoordinateBounds newBounds = MGLCoordinateBoundsMake(newSW, newNE);
+    // Get new bounds
+    mapView.camera = newCamera;
+    MGLCoordinateBounds newVisibleCoordinates = mapView.visibleCoordinateBounds;
+    mapView.camera = camera;
     
     // Test if the new camera center point and boundaries are inside colorado
     BOOL inside = MGLCoordinateInCoordinateBounds(newCameraCenter, self.colorado);
-    BOOL intersects = MGLCoordinateInCoordinateBounds(newBounds.ne, self.colorado) && MGLCoordinateInCoordinateBounds(newBounds.sw, self.colorado);
+    BOOL intersects = MGLCoordinateInCoordinateBounds(newVisibleCoordinates.ne, self.colorado) && MGLCoordinateInCoordinateBounds(newVisibleCoordinates.sw, self.colorado);
     
     return inside && intersects;
 
