@@ -1,11 +1,3 @@
-//
-//  CustomCalloutView.m
-//  Examples
-//
-//  Created by Jason Wray on 3/6/16.
-//  Copyright © 2016 Mapbox. All rights reserved.
-//
-
 #import "CustomCalloutView.h"
 
 // Set defaults for custom tip drawing
@@ -13,10 +5,9 @@ static CGFloat const tipHeight = 10.0;
 static CGFloat const tipWidth = 20.0;
 
 @interface CustomCalloutView ()
-
 @property (strong, nonatomic) UIButton *mainBody;
-
 @end
+
 @implementation CustomCalloutView {
     id <MGLAnnotation> _representedObject;
     __unused UIView *_leftAccessoryView;/* unused */

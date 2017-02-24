@@ -1,21 +1,11 @@
-//
-//  RuntimeToggleLayer.m
-//  Examples
-//
-//  Created by Eric Wolfe on 11/30/16.
-//  Copyright © 2016 Mapbox. All rights reserved.
-//
-
 #import "RuntimeToggleLayerExample.h"
 @import Mapbox;
 
 NSString *const MBXExampleRuntimeToggleLayer = @"RuntimeToggleLayerExample";
 
 @interface RuntimeToggleLayerExample () <MGLMapViewDelegate>
-
 @property (nonatomic) MGLMapView *mapView;
 @property (nonatomic) MGLStyleLayer *contoursLayer;
-
 @end
 
 @implementation RuntimeToggleLayerExample
@@ -45,7 +35,7 @@ NSString *const MBXExampleRuntimeToggleLayer = @"RuntimeToggleLayerExample";
 }
 
 - (void)addLayer {
-    MGLSource *source = [[MGLVectorSource alloc] initWithIdentifier:@"contours" URL:[NSURL URLWithString:@"mapbox://mapbox.mapbox-terrain-v2"]];
+    MGLSource *source = [[MGLVectorSource alloc] initWithIdentifier:@"contours" configurationURL:[NSURL URLWithString:@"mapbox://mapbox.mapbox-terrain-v2"]];
 
     MGLLineStyleLayer *layer = [[MGLLineStyleLayer alloc] initWithIdentifier:@"contours" source:source];
     layer.sourceLayerIdentifier = @"contour";

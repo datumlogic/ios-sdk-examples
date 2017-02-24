@@ -1,11 +1,3 @@
-//
-//  SatelliteStyleExample.m
-//  Examples
-//
-//  Created by Jason Wray on 1/29/16.
-//  Copyright © 2016 Mapbox. All rights reserved.
-//
-
 #import "SatelliteStyleExample.h"
 @import Mapbox;
 
@@ -13,8 +5,7 @@ NSString *const MBXExampleSatelliteStyle = @"SatelliteStyleExample";
 
 @implementation SatelliteStyleExample
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     // A hybrid style with unobtrusive labels is also available via +satelliteStreetsStyleURLWithVersion:.

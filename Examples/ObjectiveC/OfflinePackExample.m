@@ -1,22 +1,13 @@
-//
-//  OfflinePackExample.m
-//  Examples
-//
-//  Created by Jason Wray on 3/31/16.
-//  Copyright © 2016 Mapbox. All rights reserved.
-//
-
 #import "OfflinePackExample.h"
 @import Mapbox;
 
 NSString *const MBXExampleOfflinePack = @"OfflinePackExample";
 
 @interface OfflinePackExample () <MGLMapViewDelegate>
-
 @property (nonatomic) MGLMapView *mapView;
 @property (nonatomic) UIProgressView *progressView;
-
 @end
+
 @implementation OfflinePackExample
 
 - (void)viewDidLoad {
@@ -108,14 +99,14 @@ NSString *const MBXExampleOfflinePack = @"OfflinePackExample";
 - (void)offlinePackDidReceiveError:(NSNotification *)notification {
     MGLOfflinePack *pack = notification.object;
     NSDictionary *userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:pack.context];
-    NSError *error = notification.userInfo[MGLOfflinePackErrorUserInfoKey];
+    NSError *error = notification.userInfo[MGLOfflinePackUserInfoKeyError];
     NSLog(@"Offline pack “%@” received error: %@", userInfo[@"name"], error.localizedFailureReason);
 }
 
 - (void)offlinePackDidReceiveMaximumAllowedMapboxTiles:(NSNotification *)notification {
     MGLOfflinePack *pack = notification.object;
     NSDictionary *userInfo = [NSKeyedUnarchiver unarchiveObjectWithData:pack.context];
-    uint64_t maximumCount = [notification.userInfo[MGLOfflinePackMaximumCountUserInfoKey] unsignedLongLongValue];
+    uint64_t maximumCount = [notification.userInfo[MGLOfflinePackUserInfoKeyMaximumCount] unsignedLongLongValue];
     NSLog(@"Offline pack “%@” reached limit of %llu tiles.", userInfo[@"name"], maximumCount);
 }
 

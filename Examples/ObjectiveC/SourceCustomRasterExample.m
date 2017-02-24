@@ -1,20 +1,10 @@
-//
-//  SourceCustomRasterExample.m
-//  Examples
-//
-//  Created by Eric Wolfe on 12/2/16.
-//  Copyright © 2016 Mapbox. All rights reserved.
-//
-
 #import "SourceCustomRasterExample.h"
 @import Mapbox;
 
 NSString *const MBXExampleSourceCustomRaster = @"SourceCustomRasterExample";
 
 @interface SourceCustomRasterExample () <MGLMapViewDelegate>
-
 @property (nonatomic) MGLRasterStyleLayer *rasterLayer;
-
 @end
 
 @implementation SourceCustomRasterExample
@@ -23,29 +13,29 @@ NSString *const MBXExampleSourceCustomRaster = @"SourceCustomRasterExample";
     [super viewDidLoad];
 
     MGLMapView *mapView = [[MGLMapView alloc] initWithFrame:self.view.bounds];
-
     mapView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-    // Set the map’s center coordinate and zoom level.
     [mapView setCenterCoordinate:CLLocationCoordinate2DMake(45.5188, -122.6748)
 		       zoomLevel:13
 			animated:NO];
 
+    mapView.delegate = self;
+
     [self.view addSubview:mapView];
 
-    // Add a UISlider that will control the raster layer's opacity
+    // Add a UISlider that will control the raster layer’s opacity.
     [self addSlider];
-
-    mapView.delegate = self;
 }
 
 - (void)mapView:(MGLMapView *)mapView didFinishLoadingStyle:(MGLStyle *)style {
-    // Add a new raster source and layer
-    MGLRasterSource *source = [[MGLRasterSource alloc] initWithIdentifier:@"stamen-watercolor" tileSet:[[MGLTileSet alloc] initWithTileURLTemplates:@[@"https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"]] tileSize:256.0];
+    // Add a new raster source and layer.
+    MGLRasterSource *source = [[MGLRasterSource alloc] initWithIdentifier:@"stamen-watercolor"
+        tileURLTemplates:@[@"https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg"]
+        options:@{ MGLTileSourceOptionTileSize: @256}];
     MGLRasterStyleLayer *rasterLayer = [[MGLRasterStyleLayer alloc] initWithIdentifier:@"stamen-watercolor" source:source];
 
-    [[mapView style] addSource:source];
-    [[mapView style] addLayer:rasterLayer];
+    [mapView.style addSource:source];
+    [mapView.style addLayer:rasterLayer];
 
     self.rasterLayer = rasterLayer;
 }
